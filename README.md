@@ -6,28 +6,21 @@ This repository contains code implementing the Stochastic Approximation Algorith
 
 The code in this repository utilizes the IBM CPLEX optimization library to solve the CMWMS problem using the Sample Average  Approximation Algorithm. The CMWMS problem involves optimizing a Network in a waste management system, considering uncertain factors.
 
-This is the SAA Algorithm used in this code :\\
-\begin{frame}
-\frametitle{SAA-Cplex}
-\begin{figure}[H]
-\tiny{
-  \centering
-  \fbox{\parbox{1\textwidth}{
-    \textcolor{red}{\textit{Input:}} Number of scenarios $N$,validation scenario $N^'$, iteration $R$,  $N^{'} > > N$; \\
-    \textcolor{red}{\textit{Realization}:} Generate $R$ independent sample of $N,N^'$ scenarios for$W_{k}^{hn(s)}, W^{hn(s)}$ and $\delta^{h(s)}$ ;\\
-    \begin{enumerate}
-        \item[1)] $Gap=\infty,LB=\infty, UB=-\infty$,  
-        \item[2)]  for $r=0,1,2,..,R$, $CF_N^r=min\left\{C_1^Tb+\frac{1}{N}\sum_{n=1}^N y^n C_2(\xi^n) \right\}$
-    \item[3)]  Calculate the optimal objective value of R iterations$\quad \bar{CF_N^R}=\frac{1}{R}\sum_{r=1}^R CF_N^r \quad $ and \\ the variance $ \quad \sigma_{N,R}^2=\frac{1}{(R-1)R}\sum_{r=1}^R\left(CF_N^r-\bar{CF_N^R}\right)^2$, 
-          $LB=\bar{CF_N^R}$
-    \item[4)] Pick one feasible solution from R iteration $\quad \bar{b_N^R} \in \{b_N^1,b_N^2,...b_N^R\}$
-    \item[5)] Calculate the objective value of original problem $CF_{N'}=min\left\{C_1^T\bar{b_N^R}+\frac{1}{N'}\sum_{n=1}^{N'} y^n C_2(\xi^n) \right\}$ and $\quad UB=CF_{N'}$ 
-    \item[6)] $\quad Gap_{N,R,N'}=UB-LB$, 
-    \item[7)] if $Gap_{N,R,N'} > Goal$, increase $N$ and $R$ and repeat from realization step
-    \end{enumerate}
-    \textcolor{red}{\textit{Output:}} when the Gap is less than the goal so the optimal solution is $\bar{b_N^R}$ for first-stage and the optimal value is $CF_{N'}$ }}}
-\end{figure}        
-	\end{frame}
+## This is the SAA Algorithm used in this code
+
+**Input:** Number of scenarios $N$, validation scenario $N'$, iteration $R$, $N' > > N$;
+
+**Realization:**
+1. $Gap = \infty$, $LB = \infty$, $UB = -\infty$,
+2. For $r = 0, 1, 2, ..., R$, calculate $CF_N^r = \min\{C_1^Tb + \frac{1}{N}\sum_{n=1}^N y^n C_2(\xi^n)\}$,
+3. Calculate the optimal objective value of R iterations: $\bar{CF_N^R} = \frac{1}{R}\sum_{r=1}^R CF_N^r$ and the variance $\sigma_{N,R}^2 = \frac{1}{(R-1)R}\sum_{r=1}^R(CF_N^r - \bar{CF_N^R})^2$, $LB = \bar{CF_N^R}$,
+4. Pick one feasible solution from R iterations: $\bar{b_N^R} \in \{b_N^1, b_N^2, ..., b_N^R\}$,
+5. Calculate the objective value of the original problem: $CF_{N'} = \min\{C_1^T\bar{b_N^R} + \frac{1}{N'}\sum_{n=1}^{N'} y^n C_2(\xi^n)\}$ and $UB = CF_{N'}$,
+6. $Gap_{N,R,N'} = UB - LB$,
+7. If $Gap_{N,R,N'} > Goal$, increase $N$ and $R$, and repeat from the realization step.
+8. 
+**Output:** When the Gap is less than the goal, the optimal solution is $\bar{b_N^R}$ for the first stage, and the optimal value is $CF_{N'}$.
+       
 ## Code Overview
 
 The main script, `main.py`, implements the SAA algorithm using the CPLEX library. The algorithm iteratively refines the solution by considering different scenarios and validating against a set of scenarios. The following steps are performed in the code:
