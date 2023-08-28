@@ -1,6 +1,6 @@
 # CMWMS_SAA Repository
 
-This repository contains code implementing the Stochastic Approximation Algorithm (SAA) based on CPLEX for the CMWMS (Medical Waste Management System) problem.
+This repository contains code implementing the Stochastic Approximation Algorithm (SAA) for the Two-Stage Stochastic MILP CMWMS (Medical Waste Management System) problem.
 
 ## Description
 
